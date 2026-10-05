@@ -7,9 +7,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Standard middleware
+// Security middleware to protect against Clickjacking attacks
 app.use((req, res, next) => {
-  res.setHeader('Server', 'Apache/2.4.49');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Content-Security-Policy', "frame-ancestors 'none'");
   next();
 });
 
